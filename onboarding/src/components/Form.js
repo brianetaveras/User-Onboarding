@@ -1,12 +1,11 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { withFormik, Form, Field} from "formik";
 import * as Yup from 'yup'
-// removed:
-// state
-// handleSubmit
-// onChange
+import axios from 'axios'
+
 
 const OnboardingForm = ({ values, touched, errors }) => {
+ 
   return (
     <div className="onboarding-form">
       <Form>
@@ -61,7 +60,7 @@ const FormikOnboardingForm = withFormik({
       name: "" || name,
       email: "" || email,
       password: "" || password,
-      tos: false || tos
+      tos: '' || tos
     }
   },
 
@@ -71,8 +70,14 @@ const FormikOnboardingForm = withFormik({
       password: Yup.string().required('Password is required')
   }),
 
-  handleSubmit(values, {}) {
+  handleSubmit(values, {setStatus}) {
     console.log(values);
+    axios
+    .post('https://reqres.in/api/users/', values)
+    .then(res=>{
+        console.log(res.data);
+    })
+    .catch(err=>{console.log(err.response)})
   }
 })(OnboardingForm);
 export default FormikOnboardingForm;
