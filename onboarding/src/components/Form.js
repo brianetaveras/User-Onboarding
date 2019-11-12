@@ -69,10 +69,10 @@ const OnboardingForm = ({ values, touched, errors, status }) => {
 const FormikOnboardingForm = withFormik({
   mapPropsToValues({ name, email, password, tos }) {
     return {
-      name: "" || name,
-      email: "" || email,
-      password: "" || password,
-      tos: '' || tos
+      name:  name || '',
+      email:  email || '',
+      password:  password || '',
+      tos:  tos || false
     }
   },
 
