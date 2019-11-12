@@ -49,3 +49,6 @@
   border: none;
 }
 
+.user-container{
+  border: dashed black 2px; 
+}

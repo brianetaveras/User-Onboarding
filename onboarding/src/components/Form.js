@@ -2,9 +2,17 @@ import React, {useState, useEffect} from "react";
 import { withFormik, Form, Field} from "formik";
 import * as Yup from 'yup'
 import axios from 'axios'
+import Users from './Users'
 
 
-const OnboardingForm = ({ values, touched, errors }) => {
+const OnboardingForm = ({ values, touched, errors, status }) => {
+
+    const [users, setUsers] = useState([])
+
+    useEffect(()=>{
+        if(status)
+        setUsers([status, ...users])
+    }, [status])
  
   return (
     <div className="onboarding-form">
@@ -50,6 +58,10 @@ const OnboardingForm = ({ values, touched, errors }) => {
         </label>
         <button type="submit">Submit!</button>
       </Form>
+        {users.map(user=>{
+            return <Users key={user.id} user={user} />
+        })}
+
     </div>
   );
 };
@@ -75,7 +87,7 @@ const FormikOnboardingForm = withFormik({
     axios
     .post('https://reqres.in/api/users/', values)
     .then(res=>{
-        console.log(res.data);
+        setStatus(res.data)
     })
     .catch(err=>{console.log(err.response)})
   }
